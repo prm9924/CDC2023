@@ -1,0 +1,51 @@
+---
+title: "CDC"
+output:
+  html_document:
+    df_print: paged
+---
+ 
+```{r message=FALSE, warning=FALSE}
+# message=FALSE, warning=FALSE suppress warnings and messages from appearing in knitted files
+
+library(readr)
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(sf)
+
+```
+
+```{r}
+# We can load data from packages or the base of R with data()
+social_data <- read_excel("SocialSciences_Dataset.xlsx", sheet = "Chapter 1", skip = 2)
+colnames(social_data) <- c("CBSA Code", "Geographic Area", "Legal/statistical area description", "Population_2010", "Population_2000", "Population Rank 2010", "Population Rank 2000", "Land area in square miles 2010")
+social_data <- social_data[-c(1, 2),]
+social_data
+```
+
+```{r}
+ggplot(filter(social_data, as.numeric(Population_2010)<1000000), mapping = aes(x = as.numeric(Population_2010))) +
+  geom_histogram(binwidth = 50000, fill = "lightblue", color = "black") +
+  labs(title = "Population in 2010 Distribution", x = "Population", y = "Frequency")
+
+ggplot(social_data, mapping = aes(x = as.numeric(Population_2010))) +
+  geom_boxplot() +
+  labs(title = "Population in 2010 Distribution", x = "Population", y = "Frequency") + coord_cartesian(xlim = c(0,1000000))
+```
+
+```{r}
+social_data5 <- read_excel("Book1.xlsx", sheet = "Chapter 5 Clean")
+chapter5_gathered <- social_data5 %>%
+  gather(key="age", value="population", median_age_2010:age_above_75_2000) %>%
+  arrange(`Geographic Area`)
+chapter5_gathered
+```
+```{r}
+library(writexl)
+ch5g_df <- as.data.frame(chapter5_gathered)
+write_xlsx(ch5g_df, "chapter5gathered.xlsx")
+
+
+```
+

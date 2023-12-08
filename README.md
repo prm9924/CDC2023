@@ -7,3 +7,4 @@ An analysis of how US cities' demographics changed from 2000 to 2010. Because di
 Included in this repository is an RMD file containing our data-cleaning process in R Studio and our Tableau Workbook. We have also included our final slides for the judged oral presentation and the Excel file which contains original data and some work we did on it. Ultimately, this project won 1st place at Carolina Data Challenge 2023.
 
 
+The first and third files are Tableau Workbooks. The second is are the presentation slides.
